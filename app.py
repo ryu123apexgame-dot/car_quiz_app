@@ -2,16 +2,40 @@ import streamlit as st
 import json
 import random
 
+# ------------------------
+# ページ設定（重要）
+# ------------------------
+st.set_page_config(
+    page_title="車種クイズ",
+    page_icon="🚗",
+    layout="centered"
+)
+
+# CSS（ボタン強化）
+st.markdown("""
+<style>
+button {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ------------------------
 # データ読み込み
+# ------------------------
 with open("cars.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
-st.title("🚗 車種クイズアプリ")
+# タイトル
+st.markdown("<h1 style='text-align: center;'>🚗 車種クイズアプリ</h1>", unsafe_allow_html=True)
+st.markdown("---")
 
 mode = st.radio("モード選択", ["一覧", "クイズ", "タイプ別クイズ"])
 
 # ------------------------
-# 一覧モード
+# 一覧モード（カード風）
 # ------------------------
 if mode == "一覧":
     makers = sorted(list(set([d["maker"] for d in data])))
@@ -20,13 +44,15 @@ if mode == "一覧":
     cars = [d for d in data if d["maker"] == maker]
 
     for car in cars:
+        st.markdown("---")
         image_path = f"images/{car['maker_en']}_{car['model_en']}.jpg"
         st.image(image_path, width=300)
-        st.write(f"{car['model']}（{car['type']}）")
+        st.markdown(f"### {car['model']}")
+        st.caption(car["type"])
 
-# ========================
-# 共通関数（choices生成）
-# ========================
+# ------------------------
+# 共通関数
+# ------------------------
 def generate_choices(dataset, question):
     choices = random.sample(dataset, min(3, len(dataset)-1))
     if question not in choices:
@@ -41,7 +67,6 @@ if mode == "クイズ":
 
     TOTAL_QUESTIONS = min(10, len(data))
 
-    # 初期化
     if "quiz_initialized" not in st.session_state:
         st.session_state.quiz_initialized = True
         st.session_state.count = 0
@@ -50,16 +75,15 @@ if mode == "クイズ":
 
         st.session_state.question = random.choice(data)
         st.session_state.history = [st.session_state.question]
-
         st.session_state.choices = generate_choices(data, st.session_state.question)
         st.session_state.selected = None
 
-    # 終了画面
     if st.session_state.count >= TOTAL_QUESTIONS:
         accuracy = st.session_state.score / TOTAL_QUESTIONS * 100
-        st.subheader("結果発表")
-        st.write(f"正解数：{st.session_state.score} / {TOTAL_QUESTIONS}")
-        st.write(f"正解率：{accuracy:.1f}%")
+
+        st.subheader("🎉 結果発表")
+        st.metric("正解数", f"{st.session_state.score} / {TOTAL_QUESTIONS}")
+        st.metric("正解率", f"{accuracy:.1f}%")
 
         if st.button("もう一度"):
             st.session_state.clear()
@@ -68,15 +92,18 @@ if mode == "クイズ":
     else:
         q = st.session_state.question
 
-        st.write(f"問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
+        st.markdown(f"### 問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
+        st.markdown("### 📸 この車は？")
 
         image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
         st.image(image_path, width=600)
 
+        st.markdown("### 🔽 選択肢")
+
         options = [c["model"] for c in st.session_state.choices]
 
         selected = st.radio(
-            "この車は？",
+            "",
             options,
             index=options.index(st.session_state.selected)
             if st.session_state.selected in options else 0,
@@ -85,36 +112,36 @@ if mode == "クイズ":
 
         st.session_state.selected = selected
 
-        # 回答
-        if st.button("回答") and not st.session_state.answered:
-            st.session_state.answered = True
-            st.session_state.count += 1
+        col1, col2 = st.columns(2)
 
-            if selected == q["model"]:
-                st.session_state.score += 1
-                st.success("正解！")
-            else:
-                st.error(f"不正解：{q['model']}")
+        with col1:
+            if st.button("回答") and not st.session_state.answered:
+                st.session_state.answered = True
+                st.session_state.count += 1
 
-        # 次の問題
-        if st.session_state.answered:
-            if st.button("次の問題"):
-
-                remaining = [d for d in data if d not in st.session_state.history]
-
-                if remaining:
-                    st.session_state.question = random.choice(remaining)
-                    st.session_state.history.append(st.session_state.question)
+                if selected == q["model"]:
+                    st.session_state.score += 1
+                    st.success("✅ 正解！")
                 else:
-                    st.session_state.question = random.choice(data)
+                    st.error(f"❌ 不正解：{q['model']}")
 
-                # choices固定生成
-                st.session_state.choices = generate_choices(data, st.session_state.question)
+        with col2:
+            if st.session_state.answered:
+                if st.button("次の問題"):
 
-                st.session_state.selected = None
-                st.session_state.answered = False
+                    remaining = [d for d in data if d not in st.session_state.history]
 
-                st.rerun()
+                    if remaining:
+                        st.session_state.question = random.choice(remaining)
+                        st.session_state.history.append(st.session_state.question)
+                    else:
+                        st.session_state.question = random.choice(data)
+
+                    st.session_state.choices = generate_choices(data, st.session_state.question)
+                    st.session_state.selected = None
+                    st.session_state.answered = False
+
+                    st.rerun()
 
 # ========================
 # タイプ別クイズ
@@ -139,15 +166,15 @@ if mode == "タイプ別クイズ":
 
             st.session_state.question = random.choice(filtered)
             st.session_state.history = [st.session_state.question]
-
             st.session_state.choices = generate_choices(filtered, st.session_state.question)
             st.session_state.selected = None
 
         if st.session_state.count >= TOTAL_QUESTIONS:
             accuracy = st.session_state.score / TOTAL_QUESTIONS * 100
-            st.subheader("結果発表")
-            st.write(f"正解数：{st.session_state.score} / {TOTAL_QUESTIONS}")
-            st.write(f"正解率：{accuracy:.1f}%")
+
+            st.subheader("🎉 結果発表")
+            st.metric("正解数", f"{st.session_state.score} / {TOTAL_QUESTIONS}")
+            st.metric("正解率", f"{accuracy:.1f}%")
 
             if st.button("もう一度"):
                 st.session_state.clear()
@@ -156,15 +183,18 @@ if mode == "タイプ別クイズ":
         else:
             q = st.session_state.question
 
-            st.write(f"問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
+            st.markdown(f"### 問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
+            st.markdown("### 📸 この車は？")
 
             image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
             st.image(image_path, width=600)
 
+            st.markdown("### 🔽 選択肢")
+
             options = [c["model"] for c in st.session_state.choices]
 
             selected = st.radio(
-                "この車は？",
+                "",
                 options,
                 index=options.index(st.session_state.selected)
                 if st.session_state.selected in options else 0,
@@ -173,30 +203,34 @@ if mode == "タイプ別クイズ":
 
             st.session_state.selected = selected
 
-            if st.button("回答") and not st.session_state.answered:
-                st.session_state.answered = True
-                st.session_state.count += 1
+            col1, col2 = st.columns(2)
 
-                if selected == q["model"]:
-                    st.session_state.score += 1
-                    st.success("正解！")
-                else:
-                    st.error(f"不正解：{q['model']}")
+            with col1:
+                if st.button("回答") and not st.session_state.answered:
+                    st.session_state.answered = True
+                    st.session_state.count += 1
 
-            if st.session_state.answered:
-                if st.button("次の問題"):
-
-                    remaining = [d for d in filtered if d not in st.session_state.history]
-
-                    if remaining:
-                        st.session_state.question = random.choice(remaining)
-                        st.session_state.history.append(st.session_state.question)
+                    if selected == q["model"]:
+                        st.session_state.score += 1
+                        st.success("✅ 正解！")
                     else:
-                        st.session_state.question = random.choice(filtered)
+                        st.error(f"❌ 不正解：{q['model']}")
 
-                    st.session_state.choices = generate_choices(filtered, st.session_state.question)
+            with col2:
+                if st.session_state.answered:
+                    if st.button("次の問題"):
 
-                    st.session_state.selected = None
-                    st.session_state.answered = False
+                        remaining = [d for d in filtered if d not in st.session_state.history]
 
-                    st.rerun()
+                        if remaining:
+                            st.session_state.question = random.choice(remaining)
+                            st.session_state.history.append(st.session_state.question)
+                        else:
+                            st.session_state.question = random.choice(filtered)
+
+                        st.session_state.choices = generate_choices(filtered, st.session_state.question)
+
+                        st.session_state.selected = None
+                        st.session_state.answered = False
+
+                        st.rerun()
