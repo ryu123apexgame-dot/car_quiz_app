@@ -9,8 +9,7 @@
   {"id":"toyota_crown","maker":"トヨタ","model":"クラウン","maker_en":"toyota","model_en":"crown","type":"セダン","difficulty":2},
   {"id":"toyota_alphard","maker":"トヨタ","model":"アルファード","maker_en":"toyota","model_en":"alphard","type":"ミニバン","difficulty":2},
   {"id":"toyota_corolla","maker":"トヨタ","model":"カローラ","maker_en":"toyota","model_en":"corolla","type":"セダン","difficulty":1},
-  {"id":"toyota_rav4","maker":"トヨタ","model":"RAV4","maker_en":"toyota","model_en":"rav4","type":"SUV","difficulty":1},
-
+ 
   {"id":"nissan_roox","maker":"日産","model":"ルークス","maker_en":"nissan","model_en":"roox","type":"軽自動車","difficulty":1},
   {"id":"nissan_kicks","maker":"日産","model":"キックス","maker_en":"nissan","model_en":"kicks","type":"SUV","difficulty":1},
   {"id":"nissan_leaf","maker":"日産","model":"リーフ","maker_en":"nissan","model_en":"leaf","type":"EV","difficulty":1},

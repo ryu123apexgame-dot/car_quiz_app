@@ -84,6 +84,14 @@ if mode == "クイズ":
         st.subheader("🎉 結果発表")
         st.metric("正解数", f"{st.session_state.score} / {TOTAL_QUESTIONS}")
         st.metric("正解率", f"{accuracy:.1f}%")
+        if st.session_state.score == TOTAL_QUESTIONS:
+            st.balloons()
+            st.success("🏆 パーフェクト！すごい！転職がんばって、応援してるよ、ゆうみさん！")
+        elif st.session_state.score >= TOTAL_QUESTIONS * 0.8:
+            st.info("🔥 惜しい！かなり良い！")
+        elif st.session_state.score >= TOTAL_QUESTIONS * 0.5:
+            st.warning("👍 まずまず！")
+        else:st.error("📚 もう一回挑戦！")
 
         if st.button("もう一度"):
             st.session_state.clear()
