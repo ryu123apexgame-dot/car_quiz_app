@@ -1,0 +1,47 @@
+[
+  {"id":"toyota_yaris","maker":"トヨタ","model":"ヤリス","maker_en":"toyota","model_en":"yaris","type":"コンパクト","difficulty":1},
+  {"id":"toyota_camry","maker":"トヨタ","model":"カムリ","maker_en":"toyota","model_en":"camry","type":"セダン","difficulty":2},
+  {"id":"toyota_sienta","maker":"トヨタ","model":"シエンタ","maker_en":"toyota","model_en":"sienta","type":"ミニバン","difficulty":1},
+  {"id":"toyota_noah","maker":"トヨタ","model":"ノア","maker_en":"toyota","model_en":"noah","type":"ミニバン","difficulty":1},
+  {"id":"toyota_vellfire","maker":"トヨタ","model":"ヴェルファイア","maker_en":"toyota","model_en":"vellfire","type":"ミニバン","difficulty":2},
+  {"id":"toyota_aqua","maker":"トヨタ","model":"アクア","maker_en":"toyota","model_en":"aqua","type":"コンパクト","difficulty":1},
+  {"id":"toyota_prius","maker":"トヨタ","model":"プリウス","maker_en":"toyota","model_en":"prius","type":"ハイブリッド","difficulty":1},
+  {"id":"toyota_crown","maker":"トヨタ","model":"クラウン","maker_en":"toyota","model_en":"crown","type":"セダン","difficulty":2},
+  {"id":"toyota_alphard","maker":"トヨタ","model":"アルファード","maker_en":"toyota","model_en":"alphard","type":"ミニバン","difficulty":2},
+  {"id":"toyota_corolla","maker":"トヨタ","model":"カローラ","maker_en":"toyota","model_en":"corolla","type":"セダン","difficulty":1},
+  {"id":"toyota_rav4","maker":"トヨタ","model":"RAV4","maker_en":"toyota","model_en":"rav4","type":"SUV","difficulty":1},
+
+  {"id":"nissan_roox","maker":"日産","model":"ルークス","maker_en":"nissan","model_en":"roox","type":"軽自動車","difficulty":1},
+  {"id":"nissan_kicks","maker":"日産","model":"キックス","maker_en":"nissan","model_en":"kicks","type":"SUV","difficulty":1},
+  {"id":"nissan_leaf","maker":"日産","model":"リーフ","maker_en":"nissan","model_en":"leaf","type":"EV","difficulty":1},
+  {"id":"nissan_dayz","maker":"日産","model":"デイズ","maker_en":"nissan","model_en":"dayz","type":"軽自動車","difficulty":1},
+  {"id":"nissan_elgrand","maker":"日産","model":"エルグランド","maker_en":"nissan","model_en":"elgrand","type":"ミニバン","difficulty":2},
+  {"id":"nissan_serena","maker":"日産","model":"セレナ","maker_en":"nissan","model_en":"serena","type":"ミニバン","difficulty":1},
+  {"id":"nissan_note","maker":"日産","model":"ノート","maker_en":"nissan","model_en":"note","type":"コンパクト","difficulty":1},
+
+  {"id":"honda_freed","maker":"ホンダ","model":"フリード","maker_en":"honda","model_en":"freed","type":"ミニバン","difficulty":1},
+  {"id":"honda_zrv","maker":"ホンダ","model":"ZR-V","maker_en":"honda","model_en":"zrv","type":"SUV","difficulty":2},
+  {"id":"honda_crv","maker":"ホンダ","model":"CR-V","maker_en":"honda","model_en":"crv","type":"SUV","difficulty":1},
+  {"id":"honda_odyssey","maker":"ホンダ","model":"オデッセイ","maker_en":"honda","model_en":"odyssey","type":"ミニバン","difficulty":2},
+  {"id":"honda_stepwgn","maker":"ホンダ","model":"ステップワゴン","maker_en":"honda","model_en":"stepwgn","type":"ミニバン","difficulty":1},
+  {"id":"honda_vezel","maker":"ホンダ","model":"ヴェゼル","maker_en":"honda","model_en":"vezel","type":"SUV","difficulty":1},
+  {"id":"honda_fit","maker":"ホンダ","model":"フィット","maker_en":"honda","model_en":"fit","type":"コンパクト","difficulty":1},
+
+  {"id":"mazda_cx30","maker":"マツダ","model":"CX-30","maker_en":"mazda","model_en":"cx30","type":"SUV","difficulty":1},
+  {"id":"mazda_cx60","maker":"マツダ","model":"CX-60","maker_en":"mazda","model_en":"cx60","type":"SUV","difficulty":2},
+
+  {"id":"subaru_levorg","maker":"スバル","model":"レヴォーグ","maker_en":"subaru","model_en":"levorg","type":"ワゴン","difficulty":2},
+  {"id":"subaru_xv","maker":"スバル","model":"XV","maker_en":"subaru","model_en":"xv","type":"SUV","difficulty":1},
+
+  {"id":"suzuki_hustler","maker":"スズキ","model":"ハスラー","maker_en":"suzuki","model_en":"hustler","type":"軽SUV","difficulty":1},
+  {"id":"suzuki_wagonr","maker":"スズキ","model":"ワゴンR","maker_en":"suzuki","model_en":"wagonr","type":"軽自動車","difficulty":1},
+
+  {"id":"daihatsu_taft","maker":"ダイハツ","model":"タフト","maker_en":"daihatsu","model_en":"taft","type":"軽SUV","difficulty":1},
+
+  {"id":"mitsubishi_outlander","maker":"三菱","model":"アウトランダー","maker_en":"mitsubishi","model_en":"outlander","type":"SUV","difficulty":2},
+  {"id":"mitsubishi_delica","maker":"三菱","model":"デリカD:5","maker_en":"mitsubishi","model_en":"delica","type":"ミニバン","difficulty":2},
+
+  {"id":"lexus_lx","maker":"レクサス","model":"LX","maker_en":"lexus","model_en":"lx","type":"SUV","difficulty":3},
+  {"id":"lexus_rx","maker":"レクサス","model":"RX","maker_en":"lexus","model_en":"rx","type":"SUV","difficulty":2},
+  {"id":"lexus_ls","maker":"レクサス","model":"LS","maker_en":"lexus","model_en":"ls","type":"セダン","difficulty":3}
+]
