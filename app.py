@@ -102,7 +102,21 @@ if mode == TEXT["list"][lang]:
         model_name = car["model"] if lang == "ja" else car["model_en"].upper()
 
         st.markdown(f"### 🚗 {model_name}")
-        st.caption(f"{'タイプ' if lang == 'ja' else 'Type'}：{car['type']}")
+        type_map = {
+            "コンパクト": TEXT["type_compact"][lang],
+            "セダン": TEXT["type_sedan"][lang],
+            "SUV": TEXT["type_suv"][lang],
+            "ミニバン": TEXT["type_minivan"][lang],
+            "軽自動車": TEXT["type_light"][lang],
+            "軽SUV": "Light SUV" if lang == "en" else "軽SUV",
+            "EV": "EV",
+            "ハイブリッド": "Hybrid" if lang == "en" else "ハイブリッド",
+            "ワゴン": "Wagon" if lang == "en" else "ワゴン",
+        }
+
+        type_name = type_map.get(car["type"], car["type"])
+
+        st.caption(f"{'タイプ' if lang == 'ja' else 'Type'}：{type_name}")
         st.markdown("<br>", unsafe_allow_html=True)
 
 
@@ -264,7 +278,10 @@ if mode == TEXT["type_quiz"][lang]:
 
             st.markdown("### 🔽 選択肢")
 
-            options = [c["model"] for c in st.session_state.choices]
+            options = [
+                c["model"] if lang == "ja" else c["model_en"].upper()
+                for c in st.session_state.choices
+            ]
 
             selected = st.radio(
                 "",
@@ -283,7 +300,9 @@ if mode == TEXT["type_quiz"][lang]:
                     st.session_state.answered = True
                     st.session_state.count += 1
 
-                    if selected == q["model"]:
+                    correct_answer = q["model"] if lang == "ja" else q["model_en"].upper()
+
+                    if selected == correct_answer:
                         st.session_state.score += 1
                         st.success("✅ 正解！")
                     else:
