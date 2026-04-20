@@ -40,11 +40,6 @@ if st.button("🌐 日本語 / English"):
 lang = st.session_state.lang
 st.markdown("---")
 
-mode = st.radio(
-    TEXT["mode"][lang],
-    [TEXT["list"][lang], TEXT["quiz"][lang], TEXT["type_quiz"][lang]]
-)
-
 TEXT = {
     "title": {"ja": "🚗 車種クイズアプリforゆうみさん", "en": "🚗 Car Quiz App for yumi"},
     "mode": {"ja": "モード選択", "en": "Select Mode"},
@@ -71,6 +66,10 @@ with st.expander("🆕 アップデート情報（4/20）", expanded=True):
 
 st.markdown("---")
 
+mode = st.radio(
+    TEXT["mode"][lang],
+    [TEXT["list"][lang], TEXT["quiz"][lang], TEXT["type_quiz"][lang]]
+)
 
 # ------------------------
 # 一覧モード（カード風）
@@ -166,7 +165,7 @@ if mode == TEXT["quiz"][lang]:
         col1, col2 = st.columns(2)
 
         with col1:
-            if st.button("回答") and not st.session_state.answered:
+            if st.button(TEXT["answer"][lang]) and not st.session_state.answered:
                 st.session_state.answered = True
                 st.session_state.count += 1
 
