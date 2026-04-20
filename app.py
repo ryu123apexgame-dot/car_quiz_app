@@ -33,9 +33,13 @@ with open("cars.json", "r", encoding="utf-8") as f:
 if "lang" not in st.session_state:
     st.session_state.lang = "ja"
 
-if st.button("🌐 日本語 / English"):
-    st.session_state.lang = "en" if st.session_state.lang == "ja" else "ja"
-    st.rerun()
+lang = st.toggle(
+    "🌐 Language / 言語",
+    value=(st.session_state.get("lang", "ja") == "en")
+)
+
+st.session_state.lang = "en" if lang else "ja"
+lang = st.session_state.lang
 
 lang = st.session_state.lang
 st.markdown("---")
@@ -65,6 +69,7 @@ with st.expander("🆕 アップデート情報（4/20）", expanded=True):
     st.write("・ナンバープレートの文字削除したよ😙")
 
 st.markdown("---")
+lang = st.session_state.lang
 
 mode = st.radio(
     TEXT["mode"][lang],
