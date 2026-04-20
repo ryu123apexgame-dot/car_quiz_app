@@ -29,22 +29,55 @@ with open("cars.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # タイトル
-st.markdown("<h1 style='text-align: center;'>🚗 車種クイズアプリ</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center;'>{TEXT['title'][lang]}</h1>", unsafe_allow_html=True)
 
 with st.expander("🆕 アップデート情報（4/20）", expanded=True):
     st.write("・UIをアプリ風に改善したよ👍")
     st.write("・ナンバープレートの文字削除したよ😙")
 
 st.markdown("---")
+# ------------------------
+# 言語切替
+# ------------------------
+if "lang" not in st.session_state:
+    st.session_state.lang = "ja"
 
-mode = st.radio("モード選択", ["一覧", "クイズ", "タイプ別クイズ"])
+if st.button("🌐 日本語 / English"):
+    st.session_state.lang = "en" if st.session_state.lang == "ja" else "ja"
+    st.rerun()
+
+lang = st.session_state.lang
+st.markdown("---")
+
+mode = st.radio(
+    TEXT["mode"][lang],
+    [TEXT["list"][lang], TEXT["quiz"][lang], TEXT["type_quiz"][lang]]
+)
+
+TEXT = {
+    "title": {"ja": "🚗 車種クイズアプリforゆうみさん", "en": "🚗 Car Quiz App for yumi"},
+    "mode": {"ja": "モード選択", "en": "Select Mode"},
+    "list": {"ja": "一覧", "en": "List"},
+    "quiz": {"ja": "クイズ", "en": "Quiz"},
+    "type_quiz": {"ja": "タイプ別クイズ", "en": "Type Quiz"},
+    "maker": {"ja": "メーカー選択", "en": "Select Maker"},
+    "question": {"ja": "この車は？", "en": "What car is this?"},
+    "select": {"ja": "車種を選択してください", "en": "Select the car model"},
+    "choices": {"ja": "選択肢", "en": "Choices"},
+    "answer": {"ja": "回答", "en": "Answer"},
+    "next": {"ja": "次の問題", "en": "Next"},
+    "correct": {"ja": "正解！", "en": "Correct!"},
+    "wrong": {"ja": "不正解", "en": "Wrong"},
+    "result": {"ja": "結果発表", "en": "Result"},
+    "retry": {"ja": "もう一度", "en": "Retry"},
+}
 
 # ------------------------
 # 一覧モード（カード風）
 # ------------------------
-if mode == "一覧":
+if mode == TEXT["list"][lang]:
     makers = sorted(list(set([d["maker"] for d in data])))
-    maker = st.selectbox("メーカー選択", makers)
+    maker = st.selectbox(TEXT["maker"][lang], makers)
 
     cars = [d for d in data if d["maker"] == maker]
 
@@ -70,7 +103,7 @@ def generate_choices(dataset, question):
 # ========================
 # クイズモード
 # ========================
-if mode == "クイズ":
+if mode == TEXT["quiz"][lang]:
 
     TOTAL_QUESTIONS = min(10, len(data))
 
@@ -88,7 +121,7 @@ if mode == "クイズ":
     if st.session_state.count >= TOTAL_QUESTIONS:
         accuracy = st.session_state.score / TOTAL_QUESTIONS * 100
 
-        st.subheader("🎉 結果発表")
+        st.subheader(f"🎉 {TEXT['result'][lang]}")
         st.metric("正解数", f"{st.session_state.score} / {TOTAL_QUESTIONS}")
         st.metric("正解率", f"{accuracy:.1f}%")
         if st.session_state.score == TOTAL_QUESTIONS:
@@ -102,7 +135,7 @@ if mode == "クイズ":
            st.error("📚 もう一回挑戦！")
 
 
-        if st.button("もう一度"):
+        if st.button(TEXT["retry"][lang]):
             st.session_state.clear()
             st.rerun()
 
@@ -110,13 +143,13 @@ if mode == "クイズ":
         q = st.session_state.question
 
         st.markdown(f"## 📝 問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
-        st.markdown("### 📸 この車は？")
+        st.markdown(f"### 📸 {TEXT['question'][lang]}")
 
         image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
         st.image(image_path, use_container_width=True)
-        st.caption("車種を選択してください")
+        st.caption(TEXT["select"][lang])
 
-        st.markdown("### 🔽 選択肢")
+        st.markdown(f"### 🔽 {TEXT['choices'][lang]}")
 
         options = [c["model"] for c in st.session_state.choices]
 
@@ -139,13 +172,13 @@ if mode == "クイズ":
 
                 if selected == q["model"]:
                     st.session_state.score += 1
-                    st.success("✅ 正解！")
+                    st.success(f"✅ {TEXT['correct'][lang]}")
                 else:
-                    st.error(f"❌ 不正解：{q['model']}")
+                    st.error(f"❌ {TEXT['wrong'][lang]}：{q['model']}")
 
         with col2:
             if st.session_state.answered:
-                if st.button("次の問題"):
+                if st.button(TEXT["next"][lang]):
 
                     remaining = [d for d in data if d not in st.session_state.history]
 
@@ -164,7 +197,7 @@ if mode == "クイズ":
 # ========================
 # タイプ別クイズ
 # ========================
-if mode == "タイプ別クイズ":
+if mode == TEXT["type_quiz"][lang]:
 
     types = sorted(list(set([d["type"] for d in data])))
     selected_type = st.selectbox("タイプ選択", types)
