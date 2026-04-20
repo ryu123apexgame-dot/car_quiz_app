@@ -46,9 +46,11 @@ if mode == "一覧":
     for car in cars:
         st.markdown("---")
         image_path = f"images/{car['maker_en']}_{car['model_en']}.jpg"
-        st.image(image_path, width=300)
-        st.markdown(f"### {car['model']}")
-        st.caption(car["type"])
+        st.image(image_path, use_container_width=True)
+        st.markdown(f"### 🚗 {car['model']}")
+        st.caption(f"タイプ：{car['type']}")
+        st.markdown("<br>", unsafe_allow_html=True)
+
 
 # ------------------------
 # 共通関数
@@ -85,13 +87,15 @@ if mode == "クイズ":
         st.metric("正解数", f"{st.session_state.score} / {TOTAL_QUESTIONS}")
         st.metric("正解率", f"{accuracy:.1f}%")
         if st.session_state.score == TOTAL_QUESTIONS:
-            st.balloons()
-            st.success("🏆 パーフェクト！すごい！転職がんばって、応援してるよ、ゆうみさん！")
+           st.balloons()
+           st.success("🏆 パーフェクト！すごい！転職がんばって、応援してるよ、ゆうみさん！")
         elif st.session_state.score >= TOTAL_QUESTIONS * 0.8:
-            st.info("🔥 惜しい！かなり良い！")
+           st.info("🔥 惜しい！かなり良い！")
         elif st.session_state.score >= TOTAL_QUESTIONS * 0.5:
-            st.warning("👍 まずまず！")
-        else:st.error("📚 もう一回挑戦！")
+           st.warning("👍 まずまず！")
+        else:
+           st.error("📚 もう一回挑戦！")
+
 
         if st.button("もう一度"):
             st.session_state.clear()
@@ -100,11 +104,12 @@ if mode == "クイズ":
     else:
         q = st.session_state.question
 
-        st.markdown(f"### 問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
+        st.markdown(f"## 📝 問題 {st.session_state.count + 1} / {TOTAL_QUESTIONS}")
         st.markdown("### 📸 この車は？")
 
         image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
-        st.image(image_path, width=600)
+        st.image(image_path, use_container_width=True)
+        st.caption("車種を選択してください")
 
         st.markdown("### 🔽 選択肢")
 
@@ -195,8 +200,9 @@ if mode == "タイプ別クイズ":
             st.markdown("### 📸 この車は？")
 
             image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
-            st.image(image_path, width=600)
-
+            st.image(image_path, use_container_width=True)
+            st.caption("車種を選択してください")
+            
             st.markdown("### 🔽 選択肢")
 
             options = [c["model"] for c in st.session_state.choices]
