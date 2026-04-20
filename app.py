@@ -27,15 +27,6 @@ button {
 # ------------------------
 with open("cars.json", "r", encoding="utf-8") as f:
     data = json.load(f)
-
-# タイトル
-st.markdown(f"<h1 style='text-align: center;'>{TEXT['title'][lang]}</h1>", unsafe_allow_html=True)
-
-with st.expander("🆕 アップデート情報（4/20）", expanded=True):
-    st.write("・UIをアプリ風に改善したよ👍")
-    st.write("・ナンバープレートの文字削除したよ😙")
-
-st.markdown("---")
 # ------------------------
 # 言語切替
 # ------------------------
@@ -71,6 +62,15 @@ TEXT = {
     "result": {"ja": "結果発表", "en": "Result"},
     "retry": {"ja": "もう一度", "en": "Retry"},
 }
+# タイトル
+st.markdown(f"<h1 style='text-align: center;'>{TEXT['title'][lang]}</h1>", unsafe_allow_html=True)
+
+with st.expander("🆕 アップデート情報（4/20）", expanded=True):
+    st.write("・UIをアプリ風に改善したよ👍")
+    st.write("・ナンバープレートの文字削除したよ😙")
+
+st.markdown("---")
+
 
 # ------------------------
 # 一覧モード（カード風）
