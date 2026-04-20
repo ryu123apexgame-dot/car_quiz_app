@@ -30,6 +30,11 @@ with open("cars.json", "r", encoding="utf-8") as f:
 
 # タイトル
 st.markdown("<h1 style='text-align: center;'>🚗 車種クイズアプリ</h1>", unsafe_allow_html=True)
+
+with st.expander("🆕 アップデート情報（4/20）", expanded=True):
+    st.write("・UIをアプリ風に改善")
+    st.write("・ナンバープレートの文字削除")
+
 st.markdown("---")
 
 mode = st.radio("モード選択", ["一覧", "クイズ", "タイプ別クイズ"])
@@ -202,7 +207,7 @@ if mode == "タイプ別クイズ":
             image_path = f"images/{q['maker_en']}_{q['model_en']}.jpg"
             st.image(image_path, use_container_width=True)
             st.caption("車種を選択してください")
-            
+
             st.markdown("### 🔽 選択肢")
 
             options = [c["model"] for c in st.session_state.choices]
