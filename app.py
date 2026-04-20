@@ -32,8 +32,8 @@ with open("cars.json", "r", encoding="utf-8") as f:
 st.markdown("<h1 style='text-align: center;'>🚗 車種クイズアプリ</h1>", unsafe_allow_html=True)
 
 with st.expander("🆕 アップデート情報（4/20）", expanded=True):
-    st.write("・UIをアプリ風に改善")
-    st.write("・ナンバープレートの文字削除")
+    st.write("・UIをアプリ風に改善したよ👍")
+    st.write("・ナンバープレートの文字削除したよ😙")
 
 st.markdown("---")
 
@@ -93,7 +93,7 @@ if mode == "クイズ":
         st.metric("正解率", f"{accuracy:.1f}%")
         if st.session_state.score == TOTAL_QUESTIONS:
            st.balloons()
-           st.success("🏆 パーフェクト！すごい！転職がんばって、応援してるよ、ゆうみさん！")
+           st.success("🏆 パーフェクト！すごい！転職先でもがんばって、応援してるよ、ゆうみさん🥳")
         elif st.session_state.score >= TOTAL_QUESTIONS * 0.8:
            st.info("🔥 惜しい！かなり良い！")
         elif st.session_state.score >= TOTAL_QUESTIONS * 0.5:
@@ -253,3 +253,21 @@ if mode == "タイプ別クイズ":
                         st.session_state.answered = False
 
                         st.rerun()
+
+# すべての処理の外（共通領域）
+
+st.markdown("""
+<style>
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 12px;
+    color: gray;
+}
+</style>
+
+<div class="footer">
+    Created by ryu😊 | Ver1.1
+</div>
+""", unsafe_allow_html=True)
