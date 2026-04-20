@@ -60,6 +60,11 @@ TEXT = {
     "wrong": {"ja": "不正解", "en": "Wrong"},
     "result": {"ja": "結果発表", "en": "Result"},
     "retry": {"ja": "もう一度", "en": "Retry"},
+    "type_compact": {"ja": "コンパクト", "en": "Compact"},
+    "type_sedan": {"ja": "セダン", "en": "Sedan"},
+    "type_suv": {"ja": "SUV", "en": "SUV"},
+    "type_minivan": {"ja": "ミニバン", "en": "Minivan"},
+    "type_light": {"ja": "軽自動車", "en": "Kei Car"},
 }
 # タイトル
 st.markdown(
@@ -94,8 +99,10 @@ if mode == TEXT["list"][lang]:
         st.markdown("---")
         image_path = f"images/{car['maker_en']}_{car['model_en']}.jpg"
         st.image(image_path, use_container_width=True)
-        st.markdown(f"### 🚗 {car['model']}")
-        st.caption(f"タイプ：{car['type']}")
+        model_name = car["model"] if lang == "ja" else car["model_en"].upper()
+        type_name = car["type"] if lang == "ja" else car["type"]
+        st.markdown(f"### 🚗 {model_name}")
+        st.caption(f"{'タイプ' if lang == 'ja' else 'Type'}：{type_name}")
         st.markdown("<br>", unsafe_allow_html=True)
 
 
@@ -189,7 +196,7 @@ if mode == TEXT["quiz"][lang]:
                     st.success(f"✅ {TEXT['correct'][lang]}")
                 else:
                     st.error(f"❌ {TEXT['wrong'][lang]}：{correct_answer}")
-                    
+
         with col2:
             if st.session_state.answered:
                 if st.button(TEXT["next"][lang]):
