@@ -62,11 +62,15 @@ TEXT = {
     "retry": {"ja": "もう一度", "en": "Retry"},
 }
 # タイトル
-st.markdown(f"<h1 style='text-align: center;'>{TEXT['title'][lang]}</h1>", unsafe_allow_html=True)
+st.markdown(
+    f"<h1 style='text-align: center; font-size: 16px; margin-bottom: 5px;'>{TEXT['title'][lang]}</h1>",
+    unsafe_allow_html=True
+)
 
 with st.expander("🆕 アップデート情報（4/20）", expanded=True):
     st.write("・UIをアプリ風に改善したよ👍")
     st.write("・ナンバープレートの文字削除したよ😙")
+    st.write("・英語切り替え機能を上部につけたよ🤗")
 
 st.markdown("---")
 lang = st.session_state.lang
