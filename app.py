@@ -63,7 +63,7 @@ TEXT = {
 }
 # タイトル
 st.markdown(
-    f"<h1 style='text-align: center; font-size: 20px; margin-bottom: 5px;'>{TEXT['title'][lang]}</h1>",
+    f"<h1 style='text-align: center; font-size: 24px; margin-bottom: 5px;'>{TEXT['title'][lang]}</h1>",
     unsafe_allow_html=True
 )
 st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
