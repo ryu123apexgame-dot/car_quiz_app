@@ -71,7 +71,7 @@ st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
 with st.expander("🆕 アップデート情報（4/20）", expanded=True):
     st.write("・UIをアプリ風に改善したよ👍")
     st.write("・ナンバープレートの文字削除したよ😙")
-    st.write("・英語切り替え機能を上部につけたよ🤗")
+    st.write("・英語切り替え機能を上部につけたよ😎")
 
 st.markdown("---")
 lang = st.session_state.lang
@@ -160,7 +160,10 @@ if mode == TEXT["quiz"][lang]:
 
         st.markdown(f"### 🔽 {TEXT['choices'][lang]}")
 
-        options = [c["model"] for c in st.session_state.choices]
+        options = [
+            c["model"] if lang == "ja" else c["model_en"].upper()
+            for c in st.session_state.choices
+        ]
 
         selected = st.radio(
             "",
@@ -179,12 +182,14 @@ if mode == TEXT["quiz"][lang]:
                 st.session_state.answered = True
                 st.session_state.count += 1
 
-                if selected == q["model"]:
+                correct_answer = q["model"] if lang == "ja" else q["model_en"].upper()
+
+                if selected == correct_answer:
                     st.session_state.score += 1
                     st.success(f"✅ {TEXT['correct'][lang]}")
                 else:
-                    st.error(f"❌ {TEXT['wrong'][lang]}：{q['model']}")
-
+                    st.error(f"❌ {TEXT['wrong'][lang]}：{correct_answer}")
+                    
         with col2:
             if st.session_state.answered:
                 if st.button(TEXT["next"][lang]):
