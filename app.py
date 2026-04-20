@@ -100,9 +100,9 @@ if mode == TEXT["list"][lang]:
         image_path = f"images/{car['maker_en']}_{car['model_en']}.jpg"
         st.image(image_path, use_container_width=True)
         model_name = car["model"] if lang == "ja" else car["model_en"].upper()
-        type_name = car["type"] if lang == "ja" else car["type"]
+
         st.markdown(f"### 🚗 {model_name}")
-        st.caption(f"{'タイプ' if lang == 'ja' else 'Type'}：{type_name}")
+        st.caption(f"{'タイプ' if lang == 'ja' else 'Type'}：{car['type']}")
         st.markdown("<br>", unsafe_allow_html=True)
 
 
